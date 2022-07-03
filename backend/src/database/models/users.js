@@ -1,20 +1,12 @@
-'use strict';
-const { Model } = require('sequelize');
-const lists = require('./lists');
 module.exports = (sequelize, DataTypes) => {
-  class users extends Model {}
-  users.init({
+  const User = sequelize.define('User', {
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'users',
-  });
+  }, { timestamps: false, tableName: 'users' });
 
-  users.hasMany(lists, {
-    foreignKey: 'userId'
-  })
-
-  return users;
+  User.associate = (models) => {
+    User.hasMany(models.List, { foreignKey: 'userId' })
+  }
+  return User;
 };

@@ -1,4 +1,4 @@
-const  { users } = require('../database/models');
+const  { User } = require('../database/models');
 const { crypto, createhash } = require('../utils/cryptPasssword');
 const { newToken, validateToken } = require('../utils/token');
 
@@ -6,7 +6,7 @@ const { newToken, validateToken } = require('../utils/token');
 class LoginService {
 
   login = async (email, password) => {
-    const user = await users.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
     if (!user) return null;
 
     const compare = crypto(password, user.password);
@@ -28,7 +28,7 @@ class LoginService {
     if (!token) return null;
 
     const decodeToken = validateToken(token);
-    const user = await users.findOne({ where: { id: decodeToken.data.id } });
+    const user = await User.findOne({ where: { id: decodeToken.data.id } });
 
     if(!user) return null;
 
@@ -37,14 +37,13 @@ class LoginService {
 
 
   createUser = async (userInfo) => {
-    const encryptPassword = createhash(userInfo.password);
-    const newUser = await users.create({
+    const encryptPassword = await createhash(userInfo.password);
+    const newUser = await User.create({
       username: userInfo.username,
       email: userInfo.email,
       password: encryptPassword });
-    
-    return newUser;
+    return newUser.dataValues;
   }
 }
 
-export default new LoginService();
+module.exports = new LoginService();

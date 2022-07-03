@@ -1,5 +1,5 @@
-import * as jwt from 'jsonwebtoken';
-import * as fs from 'fs';
+const jwt = require('jsonwebtoken');
+const  fs = require('fs');
 
 const newToken = (payload) => {
   const jwtConfig = {
@@ -22,4 +22,4 @@ const validateToken = (token) => {
   return decode;
 };
 
-export { newToken, validateToken };
+module.exports = { newToken, validateToken };

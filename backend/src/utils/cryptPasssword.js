@@ -1,4 +1,4 @@
-import Bcrypt from 'bcryptjs';
+const Bcrypt = require('bcryptjs');
 
 const crypto = (password, hash)=> {
   const response = Bcrypt.compareSync(password, hash);
@@ -9,4 +9,4 @@ const createhash = async (password)=> {
   const hash = await Bcrypt.hash(password, 1);
   return hash;
 }
-export { crypto, createhash };
+module.exports = { crypto, createhash };

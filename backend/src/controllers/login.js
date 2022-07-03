@@ -1,4 +1,4 @@
-import loginService from '../services/login';
+const  loginService = require('../services/login');
 
 class LoginController {
   login = async ( req, res, next) => {
@@ -32,7 +32,7 @@ class LoginController {
   createUser = async ( req, res, next) => {
     try {
       const { username, email, password } = req.body;
-      const newUser = loginService.createUser({ username, email, password });
+      const newUser = await loginService.createUser({ username, email, password });
   
       return res.status(201).json(newUser);
     } catch (err) {
@@ -41,4 +41,4 @@ class LoginController {
   };
 }
 
-export default new LoginController();
+module.exports = new LoginController();

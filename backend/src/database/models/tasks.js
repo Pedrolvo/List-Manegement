@@ -1,16 +1,11 @@
-'use strict';
-const { Model } = require('sequelize');
-
 module.exports = (sequelize, Datatypes) => {
-  class tasks extends Model {}
-
-  tasks.init({
+  const Task = sequelize.define('Task', {
     describe: Datatypes.TEXT,
     listId: Datatypes.INTEGER,
-  }, {
-    sequelize,
-    modelName: 'tasks',
-    timestamps: false,
-  })
-  return tasks;
+  }, { timestamps: false, tableName: 'tasks' });
+
+  Task.associate = (models) => {
+    Task.belongsTo(models.List, { foreignKey: 'listId' });
+  }
+  return Task;
 }
