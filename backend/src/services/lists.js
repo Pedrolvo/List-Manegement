@@ -2,10 +2,9 @@ const { List } = require('../database/models');
 
 class ListsService {
   createList = async ({ listName, userId }) => {
-    console.log(listName)
     const newList = await List.create({
       listName,
-      userId})
+      userId});
     
     return newList.dataValues;
   };
