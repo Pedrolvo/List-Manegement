@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: containermysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    ports:
+      - 3002:3306
+  backend:
+    image: node:latest
+    container_name: constainer_backend
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - 3001:3001
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=EBYTR
+      - DB_USER=root
+      - DB_PASSWORD=admin
+      - SERVER_PORT=3001
+    volumes:
+      - ./backend:/usr/app
+    working_dir: /usr/app
+    command: bash -c "npm install && npm run db:reset && npm start"
+  frontend:
+    image: node:latest
+    container_name: container_front
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    environment:
+      - REACT_APP_BACK_HOST=backend
+      - REACT_APP_BACK_PORT=3001
+    
