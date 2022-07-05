@@ -10,6 +10,7 @@ class ListsService {
   };
 
   deleteList = async (id) => {
+
     const count = await List.destroy({ where: { id } });
 
     return count;

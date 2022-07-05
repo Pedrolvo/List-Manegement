@@ -37,9 +37,8 @@ class ListsController {
 
   get = async (req, res, next) => {
     try {
-      const { userId } = req.body;
-      const allLists = await listService.getLists(userId);
-
+      const { id } = req.params;
+      const allLists = await listService.getLists(id);
       return res.status(200).json(allLists);
     } catch (err) {
       next(err);

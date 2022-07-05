@@ -7,6 +7,6 @@ const routerList = express.Router();
 routerList.post('/', listController.create);
 routerList.delete('/:id', listController.delete);
 routerList.put('/:id', listController.update);
-routerList.get('/', listController.get);
+routerList.get('/:id', listController.get);
 
 module.exports = routerList;

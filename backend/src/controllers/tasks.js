@@ -28,6 +28,7 @@ class TasksController {
       const { id } = req.params;
       const { describe, listId } = req.body;
       const updated = await tasksService.updateTask({ id, describe, listId });
+      console.log('parammm ==>', id, describe)
 
       return res.status(200).json(updated);
     } catch (err) {
@@ -37,8 +38,8 @@ class TasksController {
 
   get = async (req, res, next) => {
     try {
-      const { listId } = req.body;
-      const allTasks = await tasksService.getTasks(listId);
+      const { id } = req.params;
+      const allTasks = await tasksService.getTasks(id);
 
       return res.status(200).json(allTasks);
     } catch (err) {
